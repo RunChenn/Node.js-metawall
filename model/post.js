@@ -1,28 +1,18 @@
 const mongoose = require('mongoose');
 const postsSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, '貼文姓名未填寫']
-  },
-  tags: [
-    {
-      type: String,
-      required: [true, '貼文標籤 tags 未填寫']
-    }
-  ],
-  type: {
-    type: String,
-    enum:['group','person'],
-    required: [true, '貼文類型 type 未填寫']
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user', // 會連接到user connections
+    required: [true, '貼文 ID 未填寫'],
   },
   image: {
     type: String,
-    default: ""
+    default: '',
   },
   createAt: {
     type: Date,
     default: Date.now,
-    select: false
+    select: false,
   },
   content: {
     type: String,
@@ -30,17 +20,14 @@ const postsSchema = new mongoose.Schema({
   },
   likes: {
     type: Number,
-    default: 0
+    default: 0,
   },
-  comments:{
+  comments: {
     type: Number,
-    default: 0
+    default: 0,
   },
 });
 
-const posts = mongoose.model(
-  'posts',
-  postsSchema
-);
+const posts = mongoose.model('posts', postsSchema);
 
 module.exports = posts;
