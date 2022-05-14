@@ -1,0 +1,196 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Mets API",
+    "description": "示範生成文件"
+  },
+  "host": "localhost:3005",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/posts/": {
+      "get": {
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "取得全部貼文",
+        "parameters": [
+          {
+            "name": "timeSort",
+            "in": "query"
+          },
+          {
+            "name": "q",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "627619338c3106b48eb8028d"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Leo"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "person"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "測試關聯資料1"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "user": {
+                        "type": "string",
+                        "example": "6276188c96948611538e8ee6"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-07T07:01:07.951+00:00"
+                      },
+                      "__v": {
+                        "type": "number",
+                        "example": 0
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "取得全部貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "627d29fd00d50edee2ecbb34"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "測試關聯資料1"
+                }
+              },
+              "required": [
+                "user",
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "627d29fd00d50edee2ecbb34"
+                      },
+                      "user": {
+                        "type": "string",
+                        "example": "627d29fd00d50edee2ecbb34"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "測試關聯資料1"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "comments": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-07T07:01:07.951+00:00"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
+}
