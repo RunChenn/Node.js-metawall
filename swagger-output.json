@@ -14,13 +14,22 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/api/posts/": {
+    "/posts/": {
       "get": {
         "tags": [
           "Posts - 貼文"
         ],
         "description": "取得全部貼文",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "timeSort",
+            "in": "query"
+          },
+          {
+            "name": "q",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "some description...",
@@ -103,17 +112,9 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "user": {
                   "type": "string",
-                  "example": "Leo"
-                },
-                "tags": {
-                  "type": "string",
-                  "example": "LINE"
-                },
-                "type": {
-                  "type": "string",
-                  "example": "person"
+                  "example": "627d29fd00d50edee2ecbb34"
                 },
                 "content": {
                   "type": "string",
@@ -121,9 +122,7 @@
                 }
               },
               "required": [
-                "name",
-                "tags",
-                "type",
+                "user",
                 "content"
               ]
             }
@@ -146,21 +145,11 @@
                     "properties": {
                       "_id": {
                         "type": "string",
-                        "example": "627619338c3106b48eb8028d"
+                        "example": "627d29fd00d50edee2ecbb34"
                       },
-                      "name": {
+                      "user": {
                         "type": "string",
-                        "example": "Leo"
-                      },
-                      "tags": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "type": {
-                        "type": "string",
-                        "example": "person"
+                        "example": "627d29fd00d50edee2ecbb34"
                       },
                       "content": {
                         "type": "string",
@@ -170,21 +159,17 @@
                         "type": "string",
                         "example": ""
                       },
-                      "user": {
-                        "type": "string",
-                        "example": "6276188c96948611538e8ee6"
-                      },
                       "likes": {
                         "type": "number",
                         "example": 0
                       },
+                      "comments": {
+                        "type": "string",
+                        "example": ""
+                      },
                       "createdAt": {
                         "type": "string",
                         "example": "2022-05-07T07:01:07.951+00:00"
-                      },
-                      "__v": {
-                        "type": "number",
-                        "example": 0
                       }
                     }
                   }
@@ -200,9 +185,7 @@
     },
     "/users/": {
       "get": {
-        "tags": [
-          "User - 使用者"
-        ],
+        "tags": [],
         "description": "",
         "parameters": [],
         "responses": {}

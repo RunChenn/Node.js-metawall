@@ -49,9 +49,7 @@ const posts = {
          type: "object",
          description: '資料格式',
          schema: {
-           "$name": 'Leo',
-           "$tags": 'LINE',
-           "$type": 'person',
+           "$user": '627d29fd00d50edee2ecbb34',
            "$content": '測試關聯資料1'
          }
         }
@@ -61,16 +59,13 @@ const posts = {
             "status": true,
             "data": [
               {
-                "_id": "627619338c3106b48eb8028d",
-                "name": "Leo",
-                "tags": [ "LINE" ],
-                "type": "person",
+                "_id": "627d29fd00d50edee2ecbb34",
+                "user": "627d29fd00d50edee2ecbb34",
                 "content": "測試關聯資料1",
                 "image": "",
-                "user": "6276188c96948611538e8ee6",
                 "likes": 0,
+                "comments": "",
                 "createdAt": "2022-05-07T07:01:07.951+00:00",
-                "__v": 0
               }
             ]
           }
@@ -78,11 +73,9 @@ const posts = {
     */
     try {
       const { user, content, image } = req.body;
-      console.log(user);
 
-      if (user & content) {
+      if (user && content) {
         const checkUser = await Users.findById(user);
-        console.log(checkUser);
         if (checkUser) {
           const newPost = await Posts.create({
             user,
@@ -102,24 +95,3 @@ const posts = {
 };
 
 module.exports = posts;
-
-//  swagger.responses[200] = {
-//    description: 'post...',
-//    schema: {
-//      "status": true
-//      "data": [
-//         {
-//           "_id": "627619338c3106b48eb8028d",
-//           "name": "Leo",
-//           "tags": [ "LINE" ],
-//           "type": "person",
-//           "content": "測試關聯資料1",
-//           "image": "",
-//           "user": "6276188c96948611538e8ee6",
-//           "likes": 0,
-//           "createdAt": "2022-05-07T07:01:07.951+00:00",
-//           "__v": 0
-//        }
-//      ]
-//    }
-//  }
