@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "9b18f8d0-aea7-4b58-85e1-4feae4458f27",
+		"name": "posts - heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得所有貼文",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://morning-chamber-09520.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"morning-chamber-09520",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增貼文",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"627d29fd00d50edee2ecbb34\",\n    \"content\": \"測試關聯資料1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://morning-chamber-09520.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"morning-chamber-09520",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
