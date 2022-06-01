@@ -1,10 +1,12 @@
 const handleSuccess = require('../service/handleSuccess');
 const handleError = require('../service/handleError');
+const appError = require('../service/appError');
+const handleErrorAsync = require('../service/handleErrorAsync');
 const Posts = require('../model/post');
 const Users = require('../model/user');
 
 const posts = {
-  async getPosts(req, res) {
+  getPosts: handleErrorAsync(async (req, res, next) => {
     /* #swagger.tags = ['Posts - 貼文']
        #swagger.description = '取得全部貼文'
        #swagger.responses[200] = {
@@ -30,7 +32,8 @@ const posts = {
     */
 
     const timeSort = req.query.timeSort == 'asc' ? 'createdAt' : '-createdAt';
-    const q = req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
+    const q =
+      req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
     const post = await Posts.find(q)
       .populate({
         path: 'user',
@@ -40,8 +43,8 @@ const posts = {
     // asc 遞增(由小到大，由舊到新) createdAt ;
     // desc 遞減(由大到小、由新到舊) "-createdAt"
     handleSuccess(res, post);
-  },
-  async createdPosts(req, res) {
+  }),
+  createdPosts: handleErrorAsync(async (req, res, next) => {
     /* #swagger.tags = ['Posts - 貼文']
        #swagger.description = '取得全部貼文'
        #swagger.parameters['body'] = {
@@ -71,27 +74,45 @@ const posts = {
           }
         }
     */
-    try {
-      const { user, content, image } = req.body;
 
-      if (user && content) {
-        const checkUser = await Users.findById(user);
-        if (checkUser) {
-          const newPost = await Posts.create({
-            user,
-            content,
-            image,
-          });
-          handleSuccess(res, newPost);
-        }
-      } else {
-        const errMsg = { message: '無此 id' };
-        handleError(res, errMsg);
-      }
-    } catch (err) {
-      handleError(res, err);
+    let { user, content, image } = req.body;
+
+    console.log(user);
+
+    if (typeof user === undefined || user === null || user.trim() === '') {
+      return next(appError(404, '查無此 id', next));
     }
-  },
+
+    if (
+      typeof content === undefined ||
+      content === null ||
+      content.trim() === ''
+    ) {
+      return next(appError(400, '你沒有填寫 content 資料', next));
+    }
+
+    try {
+      const checkUser = await Users.findById(user);
+
+      console.log(checkUser);
+      if (!checkUser) {
+        return next(appError(404, '查無此 id', next));
+      }
+
+      user = user.trim();
+      content = content.trim();
+
+      const newPost = await Posts.create({
+        user,
+        content,
+        image,
+      });
+
+      handleSuccess(res, newPost);
+    } catch (err) {
+      next(appError(404, '查無此 id', next));
+    }
+  }),
 };
 
 module.exports = posts;
