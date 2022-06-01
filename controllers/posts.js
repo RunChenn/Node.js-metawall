@@ -1,5 +1,4 @@
 const handleSuccess = require('../service/handleSuccess');
-const handleError = require('../service/handleError');
 const appError = require('../service/appError');
 const handleErrorAsync = require('../service/handleErrorAsync');
 const Posts = require('../model/post');
@@ -77,30 +76,20 @@ const posts = {
 
     let { user, content, image } = req.body;
 
-    console.log(user);
-
-    if (typeof user === undefined || user === null || user.trim() === '') {
+    if (typeof user === undefined || user === null || user === '') {
       return next(appError(404, '查無此 id', next));
     }
 
-    if (
-      typeof content === undefined ||
-      content === null ||
-      content.trim() === ''
-    ) {
+    if (typeof content === undefined || content === null || content === '') {
       return next(appError(400, '你沒有填寫 content 資料', next));
     }
 
     try {
       const checkUser = await Users.findById(user);
 
-      console.log(checkUser);
       if (!checkUser) {
         return next(appError(404, '查無此 id', next));
       }
-
-      user = user.trim();
-      content = content.trim();
 
       const newPost = await Posts.create({
         user,
@@ -110,7 +99,7 @@ const posts = {
 
       handleSuccess(res, newPost);
     } catch (err) {
-      next(appError(404, '查無此 id', next));
+      next(err);
     }
   }),
 };
