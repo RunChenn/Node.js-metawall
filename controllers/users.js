@@ -3,8 +3,10 @@ const handleError = require('../service/handleError');
 const appError = require('../service/appError');
 const handleErrorAsync = require('../service/handleErrorAsync');
 const User = require('../model/user');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
+const {isAuth,generateSendJWT} = require('../middleware/auth');
 
 // bcrypt.hash('12222', 12).then((res) => {
 //   bcrypt.compare('12222', res, function (err, ans) {
