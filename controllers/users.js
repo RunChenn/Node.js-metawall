@@ -13,10 +13,7 @@ const users = {
   }),
   getProfile: handleErrorAsync(async (req, res) => {
 
-    // const { id } = req.params;
-
-    // const profile = await User.findOne({ _id: id });
-    const profile = await User.findOne();
+    const profile = await User.findOne(req.user._id);
 
     if (!profile) {
       return next(appError('400', '查無此用戶', next));
@@ -106,6 +103,7 @@ const users = {
     }
     generateSendJWT(user, 200, res);
   }),
+  // 重設密碼
   updatePassword: handleErrorAsync(async (req, res, next) => {
     const { password, confirmPassword } = req.body;
 
