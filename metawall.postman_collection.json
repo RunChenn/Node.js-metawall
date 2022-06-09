@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "790fbb1a-2dbf-4b8c-88bf-b5e2c314b6d6",
-		"name": "week6",
+		"name": "metawall",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "3358106"
 	},
@@ -200,6 +200,42 @@
 					],
 					"path": [
 						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "上傳圖片",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTE2OTkyYzI4Y2Y5YzE5NjhkNTdmOCIsImlhdCI6MTY1NDc2MDA4MiwiZXhwIjoxNjU1MzY0ODgyfQ.EqxOXF7CoPBQNUlelGis3D1mkoYbgfSUOKIeuGU0peM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"type": "file",
+							"src": "/Users/runchen/Doc/Program/code/class/六角/nodejs直播/week6/public/img/p2.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://stormy-tundra-81133.herokuapp.com/upload",
+					"protocol": "https",
+					"host": [
+						"stormy-tundra-81133",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"upload"
 					]
 				}
 			},
