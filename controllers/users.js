@@ -1,21 +1,10 @@
 const handleSuccess = require('../service/handleSuccess');
-const handleError = require('../service/handleError');
 const appError = require('../service/appError');
 const handleErrorAsync = require('../service/handleErrorAsync');
 const User = require('../model/user');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
-const {isAuth,generateSendJWT} = require('../middleware/auth');
-
-// bcrypt.hash('12222', 12).then((res) => {
-//   bcrypt.compare('12222', res, function (err, ans) {
-//     console.log(ans);
-//   });
-//   console.log(res);
-// });
-
-// console.log(validator.isLength('12222', { min: 8 }));
+const { generateSendJWT } = require('../middleware/auth');
 
 const users = {
   getUsers: handleErrorAsync(async (req, res) => {
@@ -23,8 +12,46 @@ const users = {
     handleSuccess(res, user);
   }),
   getProfile: handleErrorAsync(async (req, res) => {
-    const user = await User.find();
+
+    // const { id } = req.params;
+
+    // const profile = await User.findOne({ _id: id });
+    const profile = await User.findOne();
+
+    if (!profile) {
+      return next(appError('400', '查無此用戶', next));
+    }
+
+    handleSuccess(res, profile);
+
+  }),
+  updateProfile: handleErrorAsync(async (req, res, next) => {
+
+    const { name, email, sex } = req.body;
+    
+    if(!name) {
+      return next(appError('400', '名字不可為空！', next));
+    };
+
+    if(!email) {
+      return next(appError('400', 'Email不可為空！', next));
+    };
+  
+    const isSex = ['male', 'female'].find(o => o === sex);
+    if((!isSex && sex) || sex === '') {
+      return next(appError('400', '性別資料有誤！', next));
+    };
+
+    const payload = { 
+      name,
+      email,
+      sex
+    };
+
+    const user = await User.findByIdAndUpdate(req.user._id, payload, { new: true });
+
     handleSuccess(res, user);
+
   }),
   // 註冊
   sign_up: handleErrorAsync(async (req, res, next) => {
@@ -79,7 +106,6 @@ const users = {
     }
     generateSendJWT(user, 200, res);
   }),
-  // 重設密碼
   updatePassword: handleErrorAsync(async (req, res, next) => {
     const { password, confirmPassword } = req.body;
 

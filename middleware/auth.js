@@ -18,11 +18,13 @@ const isAuth = handleErrorAsync(async (req, res, next) => {
 
   // 驗證 token 正確性
   const decoded = await jwt.verify(token,process.env.JWT_SECRET,(err,payload) =>{
-    if(err){
-      reject(err)
-    }else{
-      resolve(payload)
+
+    if (err) {
+      next(appError(401,'token 錯誤',next));
+    } else {
+      return payload;
     }
+
   });
 
   const currentUser = await User.findById(decoded.id);
