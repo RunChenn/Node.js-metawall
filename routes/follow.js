@@ -5,7 +5,7 @@ const { isAuth } = require('../middleware/auth');
 
 router.get('/:id', isAuth, FollowControllers.getFollow);
 
-router.patch('/:id', isAuth, FollowControllers.updateFollow);
+router.post('/:id', isAuth, FollowControllers.updateFollow);
 
 router.delete('/:id', isAuth, FollowControllers.deleteFollow);
 

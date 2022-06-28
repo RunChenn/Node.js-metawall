@@ -20,7 +20,7 @@ const follow = {
       })
     successHandle(res, follow)
   }),
-  updateFollow: handleErrorAsync(async (req, res) => {
+  updateFollow: handleErrorAsync(async (req, res, next) => {
 
     if (req.params.id === req.user.id) {
       return next(appError(401,'您無法追蹤自己',next));
