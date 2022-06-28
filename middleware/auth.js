@@ -34,6 +34,7 @@ const isAuth = handleErrorAsync(async (req, res, next) => {
 });
 
 const generateSendJWT= (user,statusCode,res)=>{
+  // expiresIn 設定過期時間
   // 產生 JWT token
   const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{
     expiresIn: process.env.JWT_EXPIRES_DAY

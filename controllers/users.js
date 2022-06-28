@@ -131,6 +131,19 @@ const users = {
 
     generateSendJWT(user, 200, res);
   }),
+  // 取得個人按讚列表
+  getLikeList: handleErrorAsync(async (req, res) => {
+
+    const likeList = await Post.find({
+      likes: { $in: [req.user.id] }
+    }).populate({
+      path:"user",
+      select:"name _id"
+    });
+
+    handleSuccess(res, likeList);
+
+  }),
 };
 
 module.exports = users;

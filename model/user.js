@@ -12,10 +12,12 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   photo: String,
+  // enum 只能是裡面的值
   sex: {
     type: String,
     enum: ['male', 'female'],
   },
+  // select 預設是否顯示
   password: {
     type: String,
     required: [true, '請輸入密碼'],
@@ -27,6 +29,10 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
     select: false,
   },
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+  }
 });
 
 const User = mongoose.model('user', userSchema);

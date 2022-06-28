@@ -3,8 +3,10 @@ const appError = require('../service/appError');
 const handleErrorAsync = require('../service/handleErrorAsync');
 const Posts = require('../model/post');
 const Users = require('../model/user');
+const Comment = require('../model/comment');
 
 const posts = {
+  // 取得所有貼文
   getPosts: handleErrorAsync(async (req, res, next) => {
     /* #swagger.tags = ['Posts - 貼文']
        #swagger.description = '取得全部貼文'
@@ -43,6 +45,7 @@ const posts = {
     // desc 遞減(由大到小、由新到舊) "-createdAt"
     handleSuccess(res, post);
   }),
+  // 新增貼文
   createdPosts: handleErrorAsync(async (req, res, next) => {
     /* #swagger.tags = ['Posts - 貼文']
        #swagger.description = '取得全部貼文'
@@ -101,6 +104,56 @@ const posts = {
     } catch (err) {
       next(err);
     }
+  }),
+  // 新增一則貼文的讚
+  addLikes: handleErrorAsync(async (req, res, next) => {
+    const _id = req.params.id;
+    await Posts.findOneAndUpdate(
+        { _id},
+        { $addToSet: { likes: req.user.id } }
+      );
+
+      handleSuccess(res, { postId: _id, userId: req.user.id });
+
+  }),
+  // 取消一則貼文的讚
+  deleteLikes: handleErrorAsync(async (req, res, next) => {
+    const _id = req.params.id;
+    await Post.findOneAndUpdate(
+      { _id},
+      { $pull: { likes: req.user.id } }
+    );
+
+    handleSuccess(res, { postId: _id, userId: req.user.id });
+
+  }),
+  // 新增一則貼文的讚
+  addComment: handleErrorAsync(async (req, res, next) => {
+    const user = req.user.id;
+    const post = req.params.id;
+    const {comment} = req.body;
+    const newComment = await Comment.create({
+      post,
+      user,
+      comment
+    });
+
+    handleSuccess(res, newComment);
+
+  }),
+  // 取得個人所有貼文列表
+  getUserPost: handleErrorAsync(async (req, res, next) => {
+    const user = req.user.id;
+    const post = req.params.id;
+    const {comment} = req.body;
+    const newComment = await Comment.create({
+      post,
+      user,
+      comment
+    });
+
+    handleSuccess(res, newComment);
+
   }),
 };
 

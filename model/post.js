@@ -18,14 +18,27 @@ const postsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Content 未填寫'],
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    { 
+      type: mongoose.Schema.ObjectId, 
+      ref: 'User' 
+    }
+  ],
   comments: {
     type: Number,
     default: 0,
   },
+},
+{
+  versionKey: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+});
+
+postsSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'post',
+  localField: '_id'
 });
 
 const posts = mongoose.model('posts', postsSchema);

@@ -12,4 +12,7 @@ router.post('/sign_up', UsersControllers.sign_up);
 router.post('/sign_in', UsersControllers.sign_in);
 router.post('/updatePassword', isAuth, UsersControllers.updatePassword);
 
+
+router.get('/getLikeList', isAuth, UsersControllers.getLikeList);
+
 module.exports = router;

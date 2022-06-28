@@ -11,6 +11,7 @@ const appError = require('./service/appError');
 // router
 var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
+var followRouter = require('./routes/follow');
 var uploadRouter = require('./routes/upload');
 
 var app = express();
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/posts', postsRouter);
 app.use('/users', usersRouter);
+app.use('/follow', followRouter);
 app.use('/upload', uploadRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
