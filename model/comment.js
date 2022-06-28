@@ -10,6 +10,7 @@ const commentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
+    // 如果有用到find語法
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'user',
@@ -22,6 +23,7 @@ const commentSchema = new mongoose.Schema(
     }
   }
 );
+// 如果有用到find語法，就會觸發以下程式碼。引用 user 裡面的 name id createdAt 資料
 commentSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user',

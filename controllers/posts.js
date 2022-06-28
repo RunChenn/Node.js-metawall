@@ -33,12 +33,18 @@ const posts = {
     */
 
     const timeSort = req.query.timeSort == 'asc' ? 'createdAt' : '-createdAt';
+
     const q =
       req.query.q !== undefined ? { content: new RegExp(req.query.q) } : {};
+
+    // populate 呼叫 virtual
     const post = await Posts.find(q)
       .populate({
         path: 'user',
         select: 'name photo ',
+      }).populate({
+        path: 'comments',
+        select: 'comment user'
       })
       .sort(timeSort);
     // asc 遞增(由小到大，由舊到新) createdAt ;
@@ -78,6 +84,7 @@ const posts = {
     */
 
     let { user, content, image } = req.body;
+    console.log(req.body)
 
     if (typeof user === undefined || user === null || user === '') {
       return next(appError(404, '查無此 id', next));
@@ -127,7 +134,7 @@ const posts = {
     handleSuccess(res, { postId: _id, userId: req.user.id });
 
   }),
-  // 新增一則貼文的讚
+  // 新增一則貼文的留言
   addComment: handleErrorAsync(async (req, res, next) => {
     const user = req.user.id;
     const post = req.params.id;

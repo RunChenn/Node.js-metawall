@@ -24,21 +24,21 @@ const postsSchema = new mongoose.Schema({
       ref: 'User' 
     }
   ],
-  comments: {
-    type: Number,
-    default: 0,
-  },
+  // comments: {
+  //   type: Number,
+  //   default: 0,
+  // },
 },
 {
   versionKey: false,
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
 });
-
+// virtuals(虛擬)，comment偷掛上去
 postsSchema.virtual('comments', {
-  ref: 'Comment',
-  foreignField: 'post',
-  localField: '_id'
+  ref: 'Comment', // 拉的 model
+  foreignField: 'post', // model 裡面的 post
+  localField: '_id' // 找尋一樣的 id
 });
 
 const posts = mongoose.model('posts', postsSchema);
